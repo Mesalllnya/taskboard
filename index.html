@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskBoard — Student Task Management</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     APP SHELL
+============================================================ -->
+<div class="app-shell">
+
+  <!-- =========================================================
+       SIDEBAR
+  ========================================================= -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-icon">
+          <!-- Checkmark SVG -->
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#fff">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+          </svg>
+        </div>
+        <div>
+          <div class="logo-text">TaskBoard</div>
+          <div class="logo-sub">Student Edition</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav-wrapper">
+      <span class="sidebar-section-label">Main Menu</span>
+      <ul class="sidebar-nav">
+        <li class="active">
+          <a href="#" data-nav="dashboard">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+            </svg>
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav="tasks">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 3a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm6 13H6v-.5c0-2 4-3.1 6-3.1s6 1.1 6 3.1V19z"/>
+            </svg>
+            Tugas Saya
+            <span class="badge" id="badge-tasks">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav="calendar">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M20 3h-1V1h-2v2H7V1H5v2H4a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 18H4V8h16v13z"/>
+            </svg>
+            Kalender
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav="progress">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/>
+            </svg>
+            Progres
+          </a>
+        </li>
+      </ul>
+
+      <span class="sidebar-section-label" style="margin-top:16px">Akun</span>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="#" data-nav="notif">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+            </svg>
+            Notifikasi
+            <span class="badge" id="badge-notif">0</span>
+          </a>
+        </li>
+        <li>
+          <a href="#" data-nav="settings">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+              <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.48.48 0 0 0-.59.22L2.74 8.87a.47.47 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.47.47 0 0 0-.12-.61l-2.01-1.58zM12 15.6a3.6 3.6 0 1 1 0-7.2 3.6 3.6 0 0 1 0 7.2z"/>
+            </svg>
+            Pengaturan
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- User card -->
+    <div class="sidebar-user">
+      <div class="avatar">AR</div>
+      <div class="sidebar-user-info">
+        <div class="user-name">Ahmad Rizky</div>
+        <div class="user-role">Mahasiswa Aktif</div>
+      </div>
+    </div>
+
+  </aside><!-- /sidebar -->
+
+
+  <!-- =========================================================
+       MAIN WRAPPER
+  ========================================================= -->
+  <div class="main-wrapper">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <!-- Hamburger (mobile) -->
+      <button class="hamburger" id="hamburger-btn" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+        </svg>
+      </button>
+
+      <span class="topbar-title" id="topbar-title">Papan Tugas</span>
+
+      <!-- Search -->
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" width="14" height="14" fill="#5E6C84">
+          <path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16a6.47 6.47 0 0 0 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+        </svg>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Cari tugas…"
+          aria-label="Cari tugas"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="topbar-spacer"></div>
+
+      <!-- Notification button -->
+      <button class="icon-btn" id="notif-btn" aria-label="Notifikasi">
+        <span class="notif-dot" id="notif-dot" hidden></span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4a2 2 0 0 0 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4a1.5 1.5 0 0 0-3 0v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+        </svg>
+      </button>
+
+      <!-- Create task CTA -->
+      <button class="btn-primary" id="open-create-modal" aria-label="Tambah tugas baru">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+        Tambah Tugas
+      </button>
+    </header><!-- /topbar -->
+
+
+    <!-- MAIN CONTENT -->
+    <main class="content" id="main-content">
+
+      <!-- ══════════════════════════════════════════
+           VIEW: DASHBOARD (default)
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-dashboard">
+
+        <!-- Page header -->
+        <div class="content-header">
+          <div>
+            <h1>Papan Tugas</h1>
+            <p class="content-subtitle">Semester Ganjil 2025/2026 — <span id="total-tasks">0</span> tugas aktif</p>
+          </div>
+          <!-- Filter chips -->
+          <div class="filter-strip" role="group" aria-label="Filter tugas">
+            <span class="filter-label">Filter:</span>
+            <button class="filter-chip active" data-filter="all">Semua</button>
+            <button class="filter-chip" data-filter="high">Prioritas Tinggi</button>
+            <button class="filter-chip" data-filter="medium">Prioritas Sedang</button>
+            <button class="filter-chip" data-filter="low">Prioritas Rendah</button>
+          </div>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="stats-row" id="stats-row">
+          <div class="stat-card stat-todo">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="#42526E"><path d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg></div>
+            <div><div class="stat-num" id="stat-todo">0</div><div class="stat-lbl">To Do</div></div>
+          </div>
+          <div class="stat-card stat-prog">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="#0052CC"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg></div>
+            <div><div class="stat-num" id="stat-inprogress">0</div><div class="stat-lbl">In Progress</div></div>
+          </div>
+          <div class="stat-card stat-done">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="#006644"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+            <div><div class="stat-num" id="stat-completed">0</div><div class="stat-lbl">Completed</div></div>
+          </div>
+          <div class="stat-card stat-over">
+            <div class="stat-icon"><svg viewBox="0 0 24 24" width="22" height="22" fill="#BF2600"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg></div>
+            <div><div class="stat-num" id="stat-overdue">0</div><div class="stat-lbl">Overdue</div></div>
+          </div>
+        </div>
+
+        <!-- Kanban Board -->
+        <div class="kanban-board" id="kanban-board">
+
+          <!-- TO DO column -->
+          <div class="kanban-col col-todo" data-status="todo">
+            <div class="col-header">
+              <span class="col-dot"></span>
+              <span class="col-title">To Do</span>
+              <span class="col-count" id="count-todo">0</span>
+            </div>
+            <div class="col-body" id="col-todo" data-status="todo"></div>
+            <div class="col-footer">
+              <button class="col-add-btn" data-status="todo">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Tambah Tugas
+              </button>
+            </div>
+          </div>
+
+          <!-- IN PROGRESS column -->
+          <div class="kanban-col col-progress" data-status="inprogress">
+            <div class="col-header">
+              <span class="col-dot"></span>
+              <span class="col-title">In Progress</span>
+              <span class="col-count" id="count-inprogress">0</span>
+            </div>
+            <div class="col-body" id="col-inprogress" data-status="inprogress"></div>
+            <div class="col-footer">
+              <button class="col-add-btn" data-status="inprogress">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Tambah Tugas
+              </button>
+            </div>
+          </div>
+
+          <!-- COMPLETED column -->
+          <div class="kanban-col col-done" data-status="completed">
+            <div class="col-header">
+              <span class="col-dot"></span>
+              <span class="col-title">Completed</span>
+              <span class="col-count" id="count-completed">0</span>
+            </div>
+            <div class="col-body" id="col-completed" data-status="completed"></div>
+            <div class="col-footer">
+              <button class="col-add-btn" data-status="completed">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Tambah Tugas
+              </button>
+            </div>
+          </div>
+
+          <!-- OVERDUE column -->
+          <div class="kanban-col col-overdue" data-status="overdue">
+            <div class="col-header">
+              <span class="col-dot"></span>
+              <span class="col-title">Overdue</span>
+              <span class="col-count" id="count-overdue">0</span>
+            </div>
+            <div class="col-body" id="col-overdue" data-status="overdue"></div>
+            <div class="col-footer">
+              <button class="col-add-btn" data-status="overdue">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                Tambah Tugas
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /kanban-board -->
+
+        <!-- Loading state -->
+        <div class="loading-overlay" id="loading-overlay" hidden>
+          <div class="spinner"></div>
+          <p>Memuat tugas…</p>
+        </div>
+
+      </div><!-- /view-dashboard -->
+
+
+      <!-- ══════════════════════════════════════════
+           VIEW: TUGAS SAYA
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-tasks" hidden>
+        <div class="content-header">
+          <div>
+            <h1>Tugas Saya</h1>
+            <p class="content-subtitle">Semua tugas yang ditugaskan kepada Anda</p>
+          </div>
+          <button class="btn-primary" id="tasks-add-btn">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            Tambah Tugas
+          </button>
+        </div>
+        <!-- Filter bar -->
+        <div class="tasks-filter-bar">
+          <div class="tasks-filter-group">
+            <label class="tasks-filter-lbl">Status:</label>
+            <select id="tasks-filter-status" class="tasks-filter-select">
+              <option value="all">Semua</option>
+              <option value="todo">To Do</option>
+              <option value="inprogress">In Progress</option>
+              <option value="completed">Completed</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </div>
+          <div class="tasks-filter-group">
+            <label class="tasks-filter-lbl">Prioritas:</label>
+            <select id="tasks-filter-priority" class="tasks-filter-select">
+              <option value="all">Semua</option>
+              <option value="high">Tinggi</option>
+              <option value="medium">Sedang</option>
+              <option value="low">Rendah</option>
+            </select>
+          </div>
+          <div class="tasks-filter-group">
+            <label class="tasks-filter-lbl">Urutkan:</label>
+            <select id="tasks-sort" class="tasks-filter-select">
+              <option value="deadline_asc">Deadline (Terdekat)</option>
+              <option value="deadline_desc">Deadline (Terjauh)</option>
+              <option value="priority">Prioritas (Tertinggi)</option>
+              <option value="title">Judul (A–Z)</option>
+            </select>
+          </div>
+        </div>
+        <div class="tasks-list" id="tasks-list">
+          <!-- rows injected by JS -->
+        </div>
+      </div><!-- /view-tasks -->
+
+
+      <!-- ══════════════════════════════════════════
+           VIEW: KALENDER
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-calendar" hidden>
+        <div class="content-header">
+          <div>
+            <h1>Kalender</h1>
+            <p class="content-subtitle">Deadline tugas berdasarkan tanggal</p>
+          </div>
+          <div class="cal-nav">
+            <button class="btn-secondary" id="cal-prev">&#8249;</button>
+            <span class="cal-month-label" id="cal-month-label"></span>
+            <button class="btn-secondary" id="cal-next">&#8250;</button>
+          </div>
+        </div>
+        <div class="calendar-grid-wrap">
+          <div class="cal-weekdays">
+            <span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span>
+          </div>
+          <div class="cal-grid" id="cal-grid">
+            <!-- days injected by JS -->
+          </div>
+        </div>
+        <div class="cal-legend">
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-todo"></span>To Do</span>
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-inprogress"></span>In Progress</span>
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-completed"></span>Completed</span>
+          <span class="cal-legend-item"><span class="cal-dot cal-dot-overdue"></span>Overdue</span>
+        </div>
+      </div><!-- /view-calendar -->
+
+
+      <!-- ══════════════════════════════════════════
+           VIEW: PROGRES
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-progress" hidden>
+        <div class="content-header">
+          <div>
+            <h1>Progres</h1>
+            <p class="content-subtitle">Ringkasan kemajuan penyelesaian tugas Anda</p>
+          </div>
+        </div>
+        <!-- Overall progress bar -->
+        <div class="progress-section">
+          <div class="progress-card">
+            <div class="progress-card-header">
+              <span class="progress-card-title">Tingkat Penyelesaian Keseluruhan</span>
+              <span class="progress-pct" id="prog-pct">0%</span>
+            </div>
+            <div class="progress-bar-wrap">
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="prog-bar" style="width:0%"></div>
+              </div>
+            </div>
+            <p class="progress-card-sub" id="prog-sub">0 dari 0 tugas selesai</p>
+          </div>
+        </div>
+        <!-- Per-status breakdown -->
+        <div class="progress-breakdown" id="prog-breakdown">
+          <!-- injected by JS -->
+        </div>
+        <!-- Per-subject breakdown -->
+        <div class="progress-section">
+          <h2 class="progress-section-title">Per Mata Kuliah</h2>
+          <div class="progress-subjects" id="prog-subjects">
+            <!-- injected by JS -->
+          </div>
+        </div>
+      </div><!-- /view-progress -->
+
+
+      <!-- ══════════════════════════════════════════
+           VIEW: NOTIFIKASI
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-notif" hidden>
+        <div class="content-header">
+          <div>
+            <h1>Notifikasi</h1>
+            <p class="content-subtitle">Peringatan dan pengingat tugas penting</p>
+          </div>
+          <button class="btn-secondary" id="notif-clear-btn">Tandai Semua Dibaca</button>
+        </div>
+        <div class="notif-list" id="notif-list">
+          <!-- injected by JS -->
+        </div>
+      </div><!-- /view-notif -->
+
+
+      <!-- ══════════════════════════════════════════
+           VIEW: PENGATURAN
+      ══════════════════════════════════════════ -->
+      <div class="page-view" id="view-settings" hidden>
+        <div class="content-header">
+          <div>
+            <h1>Pengaturan</h1>
+            <p class="content-subtitle">Kelola profil dan preferensi aplikasi</p>
+          </div>
+        </div>
+        <div class="settings-grid">
+          <!-- Profile -->
+          <div class="settings-card">
+            <h2 class="settings-card-title">Profil Pengguna</h2>
+            <div class="settings-form">
+              <div class="form-group">
+                <label for="s-name">Nama Lengkap</label>
+                <input type="text" id="s-name" value="Ahmad Rizky" />
+              </div>
+              <div class="form-group">
+                <label for="s-semester">Semester</label>
+                <input type="text" id="s-semester" value="Semester Ganjil 2025/2026" />
+              </div>
+              <div class="form-group">
+                <label for="s-major">Program Studi</label>
+                <input type="text" id="s-major" value="Teknik Informatika" />
+              </div>
+              <button class="btn-primary" id="save-profile-btn">Simpan Profil</button>
+            </div>
+          </div>
+          <!-- Preferences -->
+          <div class="settings-card">
+            <h2 class="settings-card-title">Preferensi Aplikasi</h2>
+            <div class="settings-form">
+              <div class="settings-toggle-row">
+                <div>
+                  <div class="settings-toggle-label">Notifikasi Overdue</div>
+                  <div class="settings-toggle-sub">Tampilkan notifikasi untuk tugas yang lewat deadline</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="pref-notif-overdue" checked />
+                  <span class="toggle-knob"></span>
+                </label>
+              </div>
+              <div class="settings-toggle-row">
+                <div>
+                  <div class="settings-toggle-label">Badge Sidebar</div>
+                  <div class="settings-toggle-sub">Tampilkan jumlah tugas di menu sidebar</div>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="pref-badges" checked />
+                  <span class="toggle-knob"></span>
+                </label>
+              </div>
+              <div class="form-group" style="margin-top:10px">
+                <label for="pref-deadline-warn">Peringatan deadline (hari sebelum)</label>
+                <select id="pref-deadline-warn">
+                  <option value="1">1 hari</option>
+                  <option value="2">2 hari</option>
+                  <option value="3" selected>3 hari</option>
+                  <option value="7">7 hari</option>
+                </select>
+              </div>
+              <button class="btn-primary" id="save-pref-btn">Simpan Preferensi</button>
+            </div>
+          </div>
+          <!-- Danger Zone -->
+          <div class="settings-card settings-danger-card">
+            <h2 class="settings-card-title settings-danger-title">Zona Bahaya</h2>
+            <p class="settings-danger-desc">Tindakan berikut bersifat permanen dan tidak dapat dibatalkan.</p>
+            <button class="btn-danger" id="export-tasks-btn">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zm-8 2V5h2v6h1.17L12 13.17 9.83 11H11zm-6 7h14v2H5z"/></svg>
+              Ekspor Tugas (JSON)
+            </button>
+          </div>
+        </div>
+      </div><!-- /view-settings -->
+
+    </main><!-- /content -->
+  </div><!-- /main-wrapper -->
+</div><!-- /app-shell -->
+
+
+<!-- ============================================================
+     MODAL — Create / Edit Task
+============================================================ -->
+<div class="modal-backdrop" id="modal-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">Tambah Tugas Baru</h2>
+      <button class="modal-close" id="modal-close" aria-label="Tutup modal">&times;</button>
+    </div>
+
+    <form id="task-form" novalidate>
+      <input type="hidden" id="task-id" value="" />
+
+      <div class="form-group">
+        <label for="f-title">Judul Tugas <span class="req">*</span></label>
+        <input type="text" id="f-title" placeholder="Contoh: Laporan Praktikum Fisika" required />
+        <span class="field-error" id="err-title"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="f-description">Deskripsi</label>
+        <textarea id="f-description" rows="3" placeholder="Deskripsi singkat tugas…"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-subject">Mata Kuliah</label>
+          <input type="text" id="f-subject" placeholder="Contoh: Fisika" />
+        </div>
+        <div class="form-group">
+          <label for="f-deadline">Deadline <span class="req">*</span></label>
+          <input type="date" id="f-deadline" required />
+          <span class="field-error" id="err-deadline"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="f-priority">Prioritas</label>
+          <select id="f-priority">
+            <option value="high">Tinggi</option>
+            <option value="medium" selected>Sedang</option>
+            <option value="low">Rendah</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="f-status">Status</label>
+          <select id="f-status">
+            <option value="todo">To Do</option>
+            <option value="inprogress">In Progress</option>
+            <option value="completed">Completed</option>
+            <option value="overdue">Overdue</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="f-reminder">Label Pengingat</label>
+        <input type="text" id="f-reminder" placeholder="Contoh: 2 hari lagi (opsional)" />
+      </div>
+
+      <!-- Form-level error banner -->
+      <div class="form-error-banner" id="form-error" hidden></div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="modal-cancel">Batal</button>
+        <button type="submit" class="btn-primary" id="form-submit-btn">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7l-4-4zm-5 16a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm3-10H5V5h10v4z"/></svg>
+          Simpan Tugas
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     MODAL — Confirm Delete
+============================================================ -->
+<div class="modal-backdrop" id="delete-backdrop" hidden role="dialog" aria-modal="true" aria-labelledby="delete-title">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2 class="modal-title" id="delete-title">Hapus Tugas</h2>
+      <button class="modal-close" id="delete-modal-close" aria-label="Tutup">&times;</button>
+    </div>
+    <div class="delete-body">
+      <svg viewBox="0 0 24 24" width="40" height="40" fill="#FF5630"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      <p>Yakin ingin menghapus tugas<br/><strong id="delete-task-title"></strong>?</p>
+      <p class="delete-warn">Tindakan ini tidak dapat dibatalkan.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-secondary" id="delete-cancel">Batal</button>
+      <button type="button" class="btn-danger" id="delete-confirm">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+        Ya, Hapus
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     TOAST NOTIFICATION
+============================================================ -->
+<div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
